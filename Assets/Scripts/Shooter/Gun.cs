@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TheDeveloperTrain.SciFiGuns;
 
 /// <summary>
 /// This class handles the setup of a gun
@@ -68,6 +69,15 @@ public class Gun : MonoBehaviour
     [Tooltip("The ammo image to display on the UI")]
     public Sprite ammoImage;
 
+
+    private RecoilController recoilController;
+
+    private void Awake()
+    {
+        recoilController = GetComponent<RecoilController>();
+    }
+
+
     /// <summary>
     /// Description:
     /// Standard Unity function called before Update
@@ -94,6 +104,9 @@ public class Gun : MonoBehaviour
     {
 
     }
+
+
+    
 
     /// <summary>
     /// Description:
@@ -142,6 +155,11 @@ public class Gun : MonoBehaviour
             }
 
             ableToFireAgainTime = Time.time + fireDelay;
+            if (recoilController != null)
+            {
+                recoilController.StartRecoil();
+            }
+
             PlayShootAnimation();
 
             GunSmokeHandler.OnGunFire(this);
